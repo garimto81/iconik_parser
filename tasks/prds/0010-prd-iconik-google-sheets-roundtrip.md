@@ -165,6 +165,26 @@ So that 결과가 기존 시트/기준 데이터와 동일한지 빠르게 검�
 
 ---
 
+### 5.7 매칭 검증/증명(Proof) 설계
+목표는 “시트의 값이 API로 추출한 기준(JSON)과 **셀 단위로 완전히 동일함**”을 재현 가능하게 검증하고, 결과를 해시로 고정(증명)하는 것입니다.
+
+- 스크립트: `verify_sheet_matches.py`
+- 검증 항목(기본):
+  - 행 수: `assets_count == sheet_rows(헤더 제외)`
+  - 헤더 일치(모드에 따라 `BASE_HEADER` 또는 전체 헤더)
+  - 각 행/컬럼 셀 값 동일(정규화 후 문자열 비교)
+- 증명 값:
+  - `SHA256(expected)` / `SHA256(actual)`(행/컬럼 값을 표준 포맷으로 직렬화해 계산)
+- 권장 실행 예:
+  - 기본 35컬럼만 증명(기존 탭 검증):  
+    `python verify_sheet_matches.py --json assets_test.json --sheet <SPREADSHEET_ID> --tab iconik_api_export --mode base --match-mode order --print-matches`
+  - 확장 컬럼까지 포함해 증명(새 탭 검증):  
+    `python verify_sheet_matches.py --json assets_test.json --sheet <SPREADSHEET_ID> --tab iconik_export_YYYYMMDD_HHMMSS --mode all --match-mode order`
+
+### 5.8 UI 목업(Mermaid)
+- Mermaid 기반 UI 목업은 `tasks/mockups/0010-ui-mockup-mermaid.md`를 따른다.
+- Verify 화면(핵심): PASS/FAIL, 불일치 셀 수, SHA256(expected/actual), 불일치 예시 TOP N, 행↔asset 매칭 출력
+
 ## 6. Technical/Operational Notes
 - `assets/v1/assets/{asset_id}/`는 `PATCH/PUT`이 가능(Allow 헤더 기준)하나, **메타데이터 쓰기 방식/권한**은 추가 검증이 필요합니다.
 - `metadata/v1/assets/{asset_id}/`는 현재 토큰 기준 **admin 전용(403)** 으로 확인되어, 라운드트립 구현 시 권한/엔드포인트를 명확히 해야 합니다.

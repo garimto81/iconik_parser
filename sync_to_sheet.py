@@ -66,9 +66,12 @@ def load_dotenv(path: str = ".env") -> None:
 def configure_stdio() -> None:
     for stream in (sys.stdout, sys.stderr):
         try:
-            stream.reconfigure(errors="backslashreplace")
+            stream.reconfigure(encoding="utf-8", errors="backslashreplace")
         except Exception:
-            pass
+            try:
+                stream.reconfigure(errors="backslashreplace")
+            except Exception:
+                pass
 
 
 def normalize_cell_value(value: Any) -> str:
