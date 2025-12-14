@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Secrets / local config
+.env
+.env.*
+service_account_key.json
+*service_account*.json
+*credentials*.json
+
+# Generated exports / reports (do not commit)
+assets*.json
+*.csv
+match_report*.txt
+sheet_*report*.txt
+sheet_sync_*.txt
