@@ -2,6 +2,7 @@
 
 ## 중요: 한국어 응답
 - 이 저장소 관련 대화/리뷰/문서화 응답은 항상 한글로 작성합니다.
+- PowerShell에서 한글이 깨지면 `Get-Content -Encoding utf8 AGENTS.md`처럼 UTF-8 인코딩을 지정하세요.
 
 ## Project Structure & Module Organization
 - 루트 폴더에 파이썬 스크립트가 직접 배치된 형태입니다(패키지 구조 없음).
