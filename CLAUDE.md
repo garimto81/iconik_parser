@@ -63,8 +63,9 @@ GOOGLE_SHEET_ID=...
 ### 모듈 구조 (패키지 없음, 루트 스크립트)
 
 ```
-export_assets.py    ← iconik API 페이지네이션/재시도 처리
-sync_to_sheet.py    ← 헤더 구성(BASE_HEADER + 동적 metadata 키), 값 직렬화, 매칭 리포트
+utils.py              ← 공통 유틸리티 (load_dotenv, require_env, configure_stdio, normalize_base_url)
+export_assets.py      ← iconik API 페이지네이션/재시도 처리
+sync_to_sheet.py      ← 헤더 구성(BASE_HEADER + 동적 metadata 키), 값 직렬화, 매칭 리포트
 verify_sheet_matches.py ← 셀 비교, SHA256 증명, 불일치 리포트
 ```
 
