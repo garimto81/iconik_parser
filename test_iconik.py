@@ -1,42 +1,16 @@
 import json
 import os
-import sys
 from urllib.parse import urljoin
 
 import requests
 
-
-def load_dotenv(path: str = ".env") -> None:
-    if not os.path.exists(path):
-        return
-    with open(path, encoding="utf-8") as f:
-        for raw in f:
-            line = raw.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, value = line.split("=", 1)
-            key = key.strip()
-            value = value.strip().strip('"').strip("'")
-            os.environ.setdefault(key, value)
-
-
-def require_env(name: str) -> str:
-    value = os.getenv(name)
-    if not value:
-        print(f"Missing env var: {name}", file=sys.stderr)
-        sys.exit(2)
-    return value
+from utils import load_dotenv, normalize_base_url, require_env
 
 
 def main() -> None:
     load_dotenv()
 
-    base_url = os.getenv("ICONIK_BASE_URL", "https://app.iconik.io/API/")
-    normalized_base = base_url.rstrip("/")
-    if not normalized_base.lower().endswith("/api"):
-        base_url = normalized_base + "/API/"
-    else:
-        base_url = normalized_base + "/"
+    base_url = normalize_base_url(os.getenv("ICONIK_BASE_URL", "https://app.iconik.io/API/"))
     app_id = require_env("ICONIK_APP_ID")
     auth_token = require_env("ICONIK_AUTH_TOKEN")
 
