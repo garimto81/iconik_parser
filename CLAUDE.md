@@ -43,6 +43,9 @@ ICONIK_OUTPUT=assets.json
 ICONIK_DETAIL=0
 GOOGLE_APPLICATION_CREDENTIALS=path/to/service-account.json
 GOOGLE_SHEET_ID=...
+LOCAL_NAS_MOUNT=Z:\GGPNAs
+SUBCLIP_OUTPUT_DIR=./subclips
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
 ```
 
 ### 주요 명령어
@@ -55,6 +58,8 @@ GOOGLE_SHEET_ID=...
 | `sync_to_sheet.py --dry-run` | CSV 출력만 | `python sync_to_sheet.py --dry-run > out.csv` |
 | `verify_sheet_matches.py` | 시트 ↔ JSON 셀 단위 검증 | `python verify_sheet_matches.py --json assets.json --sheet <ID> --tab iconik_export --mode base` |
 | `test_iconik.py` | iconik 인증/응답 스모크 테스트 | `python test_iconik.py` |
+| `extract_subclips.py` | 서브클립 로컬 추출 | `python extract_subclips.py --json assets.json` |
+| `webhook_server.py` | Webhook 수신 서버 | `uvicorn webhook_server:app --port 8000` |
 
 ---
 
@@ -67,6 +72,18 @@ utils.py              ← 공통 유틸리티 (load_dotenv, require_env, configu
 export_assets.py      ← iconik API 페이지네이션/재시도 처리
 sync_to_sheet.py      ← 헤더 구성(BASE_HEADER + 동적 metadata 키), 값 직렬화, 매칭 리포트
 verify_sheet_matches.py ← 셀 비교, SHA256 증명, 불일치 리포트
+
+# 서브클립 추출 모듈
+iconik_files_api.py   ← iconik Files API 클라이언트
+path_mapper.py        ← iconik 경로 → 로컬 NAS 경로 매핑
+ffmpeg_extractor.py   ← FFmpeg 서브클립 추출
+extract_subclips.py   ← 서브클립 추출 CLI
+
+# Webhook 자동화 모듈
+webhook_server.py     ← FastAPI Webhook 수신 서버
+webhook_handler.py    ← Webhook 이벤트 필터링
+subclip_service.py    ← 서브클립 추출 서비스
+slack_notifier.py     ← Slack 알림 발송
 ```
 
 ### 주요 데이터 흐름
