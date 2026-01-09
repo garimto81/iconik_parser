@@ -11,6 +11,8 @@ from google.oauth2 import service_account
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
+from utils import configure_stdio, load_dotenv
+
 
 BASE_HEADER = [
     "id",
@@ -49,29 +51,6 @@ BASE_HEADER = [
     "PostFlop",
     "All-in",
 ]
-
-
-def load_dotenv(path: str = ".env") -> None:
-    if not os.path.exists(path):
-        return
-    with open(path, encoding="utf-8") as f:
-        for raw in f:
-            line = raw.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, value = line.split("=", 1)
-            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
-
-
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        try:
-            stream.reconfigure(encoding="utf-8", errors="backslashreplace")
-        except Exception:
-            try:
-                stream.reconfigure(errors="backslashreplace")
-            except Exception:
-                pass
 
 
 def normalize_cell_value(value: Any) -> str:

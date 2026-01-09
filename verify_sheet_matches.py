@@ -9,6 +9,7 @@ from typing import Any
 from googleapiclient.discovery import build
 
 import sync_to_sheet as s
+from utils import configure_stdio, load_dotenv
 
 
 def normalize_sheet_cell(value: Any) -> str:
@@ -65,8 +66,8 @@ def write_text_report(path: str, text: str) -> None:
 
 
 def main() -> None:
-    s.load_dotenv()
-    s.configure_stdio()
+    load_dotenv()
+    configure_stdio()
 
     parser = argparse.ArgumentParser(
         description="Verify that a Google Sheets tab matches the iconik API export JSON (cell-by-cell)."

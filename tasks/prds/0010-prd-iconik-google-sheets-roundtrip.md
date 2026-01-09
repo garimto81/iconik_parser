@@ -200,10 +200,11 @@ So that 결과가 기존 시트/기준 데이터와 동일한지 빠르게 검�
 ---
 
 ## 8. 진행 현황 (이번 작업 반영)
-- 완료: `iconik_parser/AGENTS.md`에 “항상 한글로 응답” 지침 추가 및 사용 가이드 정리
+- 완료: `iconik_parser/AGENTS.md`에 "항상 한글로 응답" 지침 추가 및 사용 가이드 정리
 - 완료: `iconik_parser/sync_to_sheet.py` 1:1 매핑/새 탭 생성/매칭 리포트(`--print-matches`) 지원
 - 완료: 기존 탭(`iconik_api_export`)과 새 탭(`iconik_export_compare`) 비교 결과, 기본 35컬럼 불일치 0개 확인
-- 보류: 시트 → iconik 적용 기능(라운드트립) 구현 및 “메타데이터 쓰기” 엔드포인트/권한 확정
+- 완료: 중복 코드 리팩토링 - `utils.py` 공통 모듈 추출 (load_dotenv, require_env, configure_stdio, normalize_base_url)
+- 보류: 시트 → iconik 적용 기능(라운드트립) 구현 및 "메타데이터 쓰기" 엔드포인트/권한 확정
 
 ---
 
